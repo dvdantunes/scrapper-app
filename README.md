@@ -1,1 +1,1 @@
-# scrapy-flask-app
+# scrapper-app
