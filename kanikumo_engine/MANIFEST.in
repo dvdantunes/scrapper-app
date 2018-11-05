@@ -1,0 +1,2 @@
+recursive-include kanikumo_engine/templates *
+recursive-include kanikumo_engine/static *
