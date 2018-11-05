@@ -1,0 +1,24 @@
+sudo: required
+dist: xenial
+language: python
+
+virtualenv:
+  system_site_packages: true
+
+python:
+  - '3.6'
+
+install:
+  - make venv
+
+script:
+  - make test
+
+after_script:
+  -cd ~
+
+deploy:
+  provider: pypi
+  user: dvdantunes
+  password:
+    secure: gG8e3s4wQ5N2b4Wc+/Xs/wT1NwcXMO5Jp9EKcu8O9EoTl418FRECYF99YlBFQUme1hCWrkG3f8IvrdmUPfq2ckMX5KvCAWdYGZJgb1NLwGH6q6si2fV1YTg+oBwTVGesus7SLaam5eOoQp5Ri+lJicSyhHRzrZMX05dXi8jbloJtuurIzLRDu+JGGh9rzfLhDDJwrO0LIXlsYdGdtzQ/efb+o+c4FbgSq2KmyR6U7wQb8tLoJQLCEBFYKlQE8EjDK5n+hKmREDMZAVU6t9K1hcKROgwjXSO53PiXK6NckdX5CwQ9Fsp7GGR2s6WWmCaEGGR1wcb604ewrDLmd7xWqrYBDhe1jMYE5WgWlzl+R7GovEFPWZyQjDzfoE7agzoJtWTqA5n3RxlF5niXbSo0MzexnMuakyKr3tTGLKYQ5hb6KUJnQy4jocv3z7weq74l3C87xosVHp4wIyLcN+ovOOUy1nYObdQE/M94i4fqERwrE053GdfMAwxa8eD/AdoH8wlFhFMc77dbbPsvjpFuwFM+V3APrVgA80b2YwIegiYk4gkllVAyOHhGExyZHgs9HaOa+WeC4YlgZxKrqCkMmie5tqMunAX0xAtYQ8+rwkJRwJwGgJYUhLMBf6yefKdotebu3Iee7PMaH1T/FXeSksr4hEVqzymoy2Fzmjr/CjQ=
