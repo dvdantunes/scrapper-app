@@ -1,7 +1,7 @@
 sudo: required
 dist: xenial
-language: python
 
+language: python
 python:
   - '3.6'
 
@@ -12,10 +12,10 @@ script:
   - make test
 
 after_script:
-  -cd ~
+  - cd ~
 
 deploy:
   provider: pypi
   user: dvdantunes
   password:
-    secure: gG8e3s4wQ5N2b4Wc+/Xs/wT1NwcXMO5Jp9EKcu8O9EoTl418FRECYF99YlBFQUme1hCWrkG3f8IvrdmUPfq2ckMX5KvCAWdYGZJgb1NLwGH6q6si2fV1YTg+oBwTVGesus7SLaam5eOoQp5Ri+lJicSyhHRzrZMX05dXi8jbloJtuurIzLRDu+JGGh9rzfLhDDJwrO0LIXlsYdGdtzQ/efb+o+c4FbgSq2KmyR6U7wQb8tLoJQLCEBFYKlQE8EjDK5n+hKmREDMZAVU6t9K1hcKROgwjXSO53PiXK6NckdX5CwQ9Fsp7GGR2s6WWmCaEGGR1wcb604ewrDLmd7xWqrYBDhe1jMYE5WgWlzl+R7GovEFPWZyQjDzfoE7agzoJtWTqA5n3RxlF5niXbSo0MzexnMuakyKr3tTGLKYQ5hb6KUJnQy4jocv3z7weq74l3C87xosVHp4wIyLcN+ovOOUy1nYObdQE/M94i4fqERwrE053GdfMAwxa8eD/AdoH8wlFhFMc77dbbPsvjpFuwFM+V3APrVgA80b2YwIegiYk4gkllVAyOHhGExyZHgs9HaOa+WeC4YlgZxKrqCkMmie5tqMunAX0xAtYQ8+rwkJRwJwGgJYUhLMBf6yefKdotebu3Iee7PMaH1T/FXeSksr4hEVqzymoy2Fzmjr/CjQ=
+    secure: nkz8pYVfrXVBlrgCpiT09ltaB7p2Sbk+MzJxrdnZXF2o3oyXjTS9EOKtw6G0AH5t0yFnb/y7YhLmeAZmhrxWwuT26vi7hbSCOwBYPdIF53kUnrGh0M3d276xqyACy+wssaxa/YHlG92aYUswUT3oZwUBbKdqV0Ggbo5fwIrmiHnTAk9zaN3y7eSXsPCmTkCPEYYXW4vJNcsQEdLLhov/ZYq/Z6/K2vuV/aF121KfUp/Y/yDxNzZ7LDEVd/CUR5Ye4XuXzSpfJtytJUtgJpkb3G+uk/g4MTLuEotQ9CCymaFn8LdhF8fzSx9jyjPojX53Px8cBE4AvA5BiuvI12BW+r6jOBPIrmJTCl2Z4GvK2zXg9iO2QvJGNoOLqPVByrinfgQb+0Xu8TdkpFVvkTdFCxOHjKZ8uLoDc/aEKxh2eG9dRSZCbG4oWk2tEZIh9Su90JwUON233rH2DSTw6kBKKcyLP+bf8TihSnUO6HAS9fS3OIZr5B2oTMs5HjYgCUetFA/wdVgoMlGvq/RqpBc6od/1iMxbYG4oV1xIGtecLp6t5ttxmpL9uonh7ZHCewhvyt8v+0Mm2S3QNnEMrHeWAsITwGLOSrGZtY6iDmVNxaBwo/t7RWX11J4jmPQcQFev+aPtIymJy3zdAzzMBaBB2PSirZiwTWHeTXdlmFyzlzA=
