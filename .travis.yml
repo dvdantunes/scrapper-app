@@ -6,7 +6,7 @@ python:
   - '3.6'
 
 install:
-  - make venv
+  - make install
 
 script:
   - make test
