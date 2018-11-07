@@ -1,1 +1,1 @@
-web: gunicorn kanikum_engine.wsgi --log-file -
+web: gunicorn kanikumo_engine.wsgi --log-file -
