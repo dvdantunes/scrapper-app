@@ -17,7 +17,7 @@ requirements = [
         'Flask==1.0.2',
         'Flask-SQLAlchemy==2.3.1',
         'Flask-Migrate==2.3.0',
-        'psycopg2==2.6.1',
+        'psycopg2==2.7.5',
         'service_identity==17.0.0',
         'pyasn1==0.4.4',
         'scrapy==1.5',
@@ -42,7 +42,7 @@ extras_require = {
 
 setup(
     name='kanikumo-engine',
-    version='0.3',
+    version='0.4',
 
     author='David Antunes',
     author_email='dvdantunes@gmail.com',
