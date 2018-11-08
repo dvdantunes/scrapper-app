@@ -25,6 +25,7 @@ requirements = [
         'gunicorn==19.9.0',
         'blinker==1.4',
         'sentry-sdk==0.5.3',
+        'raven>=3',
         'Sphinx==1.8.1',
         'sphinx-rtd-theme==0.4.2',
         'pytest-flask==0.14.0',
