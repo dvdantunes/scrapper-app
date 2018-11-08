@@ -1,7 +1,7 @@
 import os, logging
 import sentry_sdk
-from sentry_sdk.integrations.flask import FlaskIntegration
 from flask import Flask
+from sentry_sdk.integrations.flask import FlaskIntegration
 
 
 # Sentry logging integration
@@ -37,6 +37,4 @@ else:
     app.logger.addHandler(file_handler)
 
 
-
-
-import kanikumo_engine.views
+import kanikumo_engine.api.setup
