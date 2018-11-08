@@ -1,2 +1,1 @@
-blinker==1.4
-raven>=3
+.
