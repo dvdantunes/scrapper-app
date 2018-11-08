@@ -15,6 +15,7 @@ with open(os.path.join(CURRENT_PATH, 'README.md'), 'r') as f:
 
 requirements = [
         'Flask==1.0.2',
+        'Flask-RESTful==0.3.6',
         'Flask-SQLAlchemy==2.3.1',
         'Flask-Migrate==2.3.0',
         'psycopg2==2.7.5',
