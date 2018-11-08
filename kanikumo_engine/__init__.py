@@ -1,6 +1,15 @@
 import os, logging
+import sentry_sdk
 from flask import Flask
-from raven.contrib.flask import Sentry
+from sentry_sdk.integrations.flask import FlaskIntegration
+
+
+# Sentry logging integration
+sentry_sdk.init(
+    dsn="https://d2da0368423246d7a8185b0c57fae3d8@sentry.io/1316056",
+    integrations=[FlaskIntegration()]
+)
+
 
 
 # Create app and set configuration
@@ -28,13 +37,5 @@ else:
     app.logger.addHandler(file_handler)
 
 
-# Sentry logging integration
-sentry = Sentry()
-sentry.init_app(app,
-                dsn='https://d2da0368423246d7a8185b0c57fae3d8:e4906569d4354eceab90f148cbf71ddc@sentry.io/1316056',
-                logging=True,
-                level=logging.ERROR)
-
-
-# Init api
+# Setup and init api
 import kanikumo_engine.api.setup
