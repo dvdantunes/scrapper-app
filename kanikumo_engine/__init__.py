@@ -18,7 +18,11 @@ app.config.from_object('kanikumo_engine.default_settings')
 app.config.from_envvar('KANIKUMO_ENGINE_SETTINGS')
 
 
+
+
+
 # Logging errors
+
 if os.environ.get('WEB_SERVER') == 'gunicorn':
     # gunicorn logging
 
@@ -35,6 +39,24 @@ else:
     file_handler.setLevel(logging.WARNING)
     file_handler.setFormatter(logging.Formatter('<%(asctime)s> <%(levelname)s> %(message)s'))
     app.logger.addHandler(file_handler)
+
+
+
+
+# Other configurations
+
+@app.after_request
+def add_header(response):
+    """
+    Add headers to prevent cache responses
+    """
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
+    response.headers['Cache-Control'] = 'public, max-age=0'
+    return response
+
+
 
 
 # Setup and init api
