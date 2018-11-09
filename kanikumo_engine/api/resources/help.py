@@ -3,7 +3,7 @@ from kanikumo_engine.api.utils import output_plaintext
 
 
 class Help(Resource):
-    """API help info resource
+    """Kanikumo engine API help resource
 
     Extends:
         Resource
@@ -11,7 +11,7 @@ class Help(Resource):
 
 
     def get(self):
-        """Public mercadopublico.cl API help
+        """Shows Kanikumo engine API help
 
         Arguments:
             None

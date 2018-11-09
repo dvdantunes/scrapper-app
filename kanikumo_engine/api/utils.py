@@ -10,7 +10,7 @@ def output_plaintext(data, code=200, headers=None):
 
     Keyword Arguments:
         code {int} -- HTTP response code (default: {200})
-        headers {dict} -- Response headers (default: {None})
+        headers {list} -- Response headers (default: {None})
 
     Returns:
         flask.Response
