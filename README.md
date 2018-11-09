@@ -1,6 +1,6 @@
-# scrapper_test
+# scraper_test
 
-scrapper_test description
+scraper_test description
 
 ## Quick Start
 
@@ -23,7 +23,7 @@ For example, on Ubuntu:
 
 ## Development environment and release process
 
- - create virtualenv with Flask and scrapper_test installed into it (latter is installed in
+ - create virtualenv with Flask and scraper_test installed into it (latter is installed in
    [develop mode](http://setuptools.readthedocs.io/en/latest/setuptools.html#development-mode) which allows
    modifying source code directly without a need to re-install the app): `make venv`
 

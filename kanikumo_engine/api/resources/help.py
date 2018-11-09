@@ -23,7 +23,7 @@ class Help(Resource):
             ' | . \\ (_| | | | | |   <| |_| | | | | | | (_) | | |___| | | | (_| | | | | |  __/ \n'\
             ' |_|\\_\\__,_|_| |_|_|_|\\_\\\\__,_|_| |_| |_|\\___/  |_____|_| |_|\\__, |_|_| |_|\\___| \n'\
             '                                                             |___/  \n'\
-            'Kon\'nichiwa! This is Kanikumo Engine scrapper api help. \n\n'\
+            'Kon\'nichiwa! This is Kanikumo Engine scraper api help. \n\n'\
             'Available end-points: \n'\
             '  /help                             Shows this help \n'\
             '  /mercadopublico/big-purchases     Get last big purchases from mercadopublico.cl \n'
