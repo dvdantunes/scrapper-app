@@ -29,7 +29,7 @@ run-dev: install
 
 # Run the app on production env
 run: install
-	WEB_SERVER=gunicorn FLASK_APP=kanikumo_engine KANIKUMO_ENGINE_SETTINGS=../settings.cfg venv/bin/gunicorn kanikumo_engine:app -p /tmp/kanikumo_engine.pid -b 127.0.0.1:5000 --access-logfile logs/access.log --log-file logs/error.log -D
+	WEB_SERVER=gunicorn FLASK_APP=kanikumo_engine KANIKUMO_ENGINE_SETTINGS=../settings.cfg venv/bin/gunicorn kanikumo_engine:app --w 4 p /tmp/kanikumo_engine.pid -b 127.0.0.1:5000 --access-logfile logs/access.log --log-file logs/error.log -D
 
 # Stop the app
 stop:
