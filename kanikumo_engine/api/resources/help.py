@@ -1,4 +1,5 @@
 from flask_restful import Resource
+
 from kanikumo_engine.api.utils import output_plaintext
 
 
