@@ -98,12 +98,12 @@ def scraper_crawl_job(spider_name):
                         "save_args":[
 
                         ],
-                        "wait":60,
+                        "wait":30,
                         "load_args":{
 
                         },
                         "viewport":"1024x768",
-                        "lua_source":"function main(splash)\r\n  local url = splash.args.url\r\n  assert(splash:go(url))\r\n  assert(splash:wait(1))\r\n\r\n  -- go back 1 month in time and wait a little (1 second)\r\n  assert(splash:runjs(\"document.querySelector('#heaFecha label[for=chkFecha]').click();\"))\r\n  assert(splash:wait(0.2))\r\n\r\n  assert(splash:runjs(\"document.querySelector('#txtFecha1').value = '10-10-2018';\"))\r\n  assert(splash:runjs(\"document.querySelector('#txtFecha2').value = '10-11-2018';\"))\r\n  assert(splash:runjs(\"document.querySelector('#btnBusqueda').click();\"))\r\n  assert(splash:wait(1))\r\n\r\n\r\n  local pages = {}\r\n  pages['1'] = {html = splash:html(), png = splash:png()}\r\n\r\n  assert(splash:runjs(\"document.querySelector('#PaginadorBusqueda__TblPages td:nth-child(3) div').click();\"))\r\n  assert(splash:wait(1))\r\n\r\n  pages['2'] = {html = splash:html(), png = splash:png()}\r\n\r\n  -- return result as a JSON object\r\n  return pages\r\nend",
+                        "lua_source":"function main(splash)\r\n  local url = splash.args.url\r\n  assert(splash:go(url))\r\n  assert(splash:wait(1))\r\n\r\n  -- go back 1 month in time and wait a little (1 second)\r\n  assert(splash:runjs(\"document.querySelector('#heaFecha label[for=chkFecha]').click();\"))\r\n  assert(splash:wait(0.2))\r\n\r\n  assert(splash:runjs(\"document.querySelector('#txtFecha1').value = '10-10-2018';\"))\r\n  assert(splash:runjs(\"document.querySelector('#txtFecha2').value = '10-11-2018';\"))\r\n  assert(splash:runjs(\"document.querySelector('#btnBusqueda').click();\"))\r\n  assert(splash:wait(2))\r\n\r\n\r\n  local pages = {}\r\n  pages['1'] = {html = splash:html(), png = splash:png()}\r\n\r\n  assert(splash:runjs(\"document.querySelector('#PaginadorBusqueda__TblPages td:nth-child(3) div').click();\"))\r\n  assert(splash:wait(1))\r\n\r\n  pages['2'] = {html = splash:html(), png = splash:png()}\r\n\r\n  -- return result as a JSON object\r\n  return pages\r\nend",
                         "png":1,
                         "har":1,
                         "html5_media":False,
@@ -111,8 +111,7 @@ def scraper_crawl_job(spider_name):
                         "url":"http://www.mercadopublico.cl/Portal/Modules/Site/Busquedas/BuscadorAvanzado.aspx?qs=9",
                         "http_method":"GET",
                         "render_all":False
-                    },)
-                    # headers=headers)
+                    })
 
         return r.json()
 
