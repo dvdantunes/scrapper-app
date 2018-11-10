@@ -26,6 +26,11 @@ class MercadoPublicoClBigPurchasesSpiderAlt(KanikumoCrawler):
 
     def get_lua_source(self):
 
+        # Get date range to search
+        today = '10-11-2018'
+        last_60_days = '10-10-2018'
+
+
         self.lua_source = """
         function main(splash)
           local url = splash.args.url
@@ -53,7 +58,7 @@ class MercadoPublicoClBigPurchasesSpiderAlt(KanikumoCrawler):
           --return {title = splash:evaljs("document.title")}
           return pages
         end
-        """ % ('10-10-2018', '10-11-2018')
+        """ % (last_60_days, today)
 
         return self.lua_source
 
@@ -79,14 +84,42 @@ class MercadoPublicoClBigPurchasesSpiderAlt(KanikumoCrawler):
                             status=200,
                             body=str.encode(response['page1']['html'])
                         )
+        resultsPage1 = self.page_parse(responsePage1)
+
 
         responsePage2 = HtmlResponse(
                             self.start_url,
                             status=200,
                             body=str.encode(response['page2']['html'])
                         )
+        resultsPage2 = self.page_parse(responsePage2)
 
-        return {
-            "title1": responsePage1.css('title::text').extract_first().strip(),
-            "title2": responsePage2.css('title::text').extract_first().strip()
-        }
+
+        return resultsPage1 + resultsPage2
+
+
+    def page_parse(self, response):
+
+        results = []
+        keys = ['id', 'name', 'buyer', 'supplier', 'invitation_ini_date', 'invitation_end_date', 'status']
+        for tableResults in response.css('div#pnlSearch1 table:nth-child(1) tr:not(.cssGridAdvancedResult)'):
+
+            row_data1 = tableResults.css('td a').re(r'.*>(.*)</a>')
+            row_data2 = tableResults.css('td span::text').extract()
+            row_data = [
+                    row_data1[0],
+                    row_data2[0],
+                    row_data1[1],
+                    row_data1[2],
+                    row_data2[1],
+                    row_data2[2],
+                    row_data2[3],
+                ]
+            # row_data = row_data1 + row_data2
+
+            big_purchase_row = dict(zip(keys, row_data))
+            results.append(big_purchase_row)
+
+        return results
+
+
