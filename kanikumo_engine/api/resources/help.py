@@ -16,6 +16,9 @@ class Help(Resource):
 
         Arguments:
             None
+
+        Returns:
+            flask.Response
         """
 
         msg = '  _  __           _ _                            _____             _             \n'\
