@@ -16,7 +16,8 @@ NEWSPIDER_MODULE = 'scraper.spiders'
 
 
 # Splash configuration
-SPLASH_URL = 'http://localhost:8050/'
+# SPLASH_URL = 'http://localhost:8050/'
+SPLASH_URL = 'https://kanikumo-splash.herokuapp.com/execute'
 DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
 HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'
 

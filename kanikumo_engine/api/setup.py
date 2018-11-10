@@ -7,7 +7,6 @@ from kanikumo_engine.api.resources.mercado_publico import BigPurchasesList
 
 
 
-
 # Create api with blueprint approach
 api_bp = Blueprint('api', __name__)
 api = Api(api_bp)
