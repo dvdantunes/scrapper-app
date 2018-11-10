@@ -1,11 +1,13 @@
+import logging
 from flask_restful import Resource
 
+from kanikumo_engine.api.utils import api_response
 from kanikumo_engine.libs.scraper import scraper_crawl_job
 
 
 
 class BigPurchasesList(Resource):
-    """mercadopublico.cl big purchases resource
+    """mercadopublico.cl big purchases api resource
 
 
     Extends:
@@ -21,13 +23,14 @@ class BigPurchasesList(Resource):
             None
         """
 
-        crawler_response = {}
-        #try:
-        crawler_response = scraper_crawl_job(self.crawler_name)
+        try:
+            crawler_response = scraper_crawl_job(self.crawler_name)
+            result = 'success'
 
-        #except Exception:
-        #    pass
-            # TODO sentry
+        except Exception as e:
+            logging.exception('Error while crawling "%s" with spider' % self.crawler_name)
+            crawler_response = {}
+            result = 'error'
 
 
-        return crawler_response
+        return api_response(crawler_response, result)
