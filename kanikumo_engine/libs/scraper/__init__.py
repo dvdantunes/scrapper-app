@@ -1,8 +1,9 @@
 import os, logging, json
 from scrapy import spiderloader
-from scrapy.crawler import CrawlerProcess
+from scrapy.crawler import CrawlerProcess, CrawlerRunner
 from scrapy.settings import Settings
-from scrapy.utils.project import get_project_settings
+from scrapy.utils.log import configure_logging
+from twisted.internet import reactor
 
 
 
@@ -57,6 +58,13 @@ def scraper_crawl_job(spider_name):
         process = CrawlerProcess(crawl_settings)
         process.crawl(spider_class)
         process.start()
+
+        # configure_logging({'LOG_FORMAT': '[%(levelname)s]: %(message)s'})
+        # runner = CrawlerRunner(crawl_settings)
+
+        # deferred = runner.crawl(spider_class)
+        # deferred.addBoth(lambda _: reactor.stop())
+        # reactor.run()
 
     except Exception as e:
         logging.exception('Error while executing crawling process')
