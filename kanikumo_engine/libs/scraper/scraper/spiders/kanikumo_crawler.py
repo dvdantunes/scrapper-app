@@ -1,4 +1,4 @@
-import os, scrapy, requests
+import os, scrapy, requests, json, logging
 from scrapy.settings import Settings
 
 
@@ -48,6 +48,7 @@ class KanikumoCrawler():
 
         Inits the default lua script and crawler settings
         """
+        self.set_default_lua_source_settings()
         self.set_lua_source()
         self.set_crawler_settings()
 
@@ -90,8 +91,8 @@ class KanikumoCrawler():
         self.lua_source_settings = {
             'js_enabled' : 'true',
             'images_enabled' : 'false',
-            'webgl_enabled ' : 'false',
-            'media_source_enabled ' : 'false',
+            # 'webgl_enabled ' : 'false',
+            # 'media_source_enabled ' : 'false',
             'user_agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:63.0) Gecko/20100101 Firefox/63.0', # valid Firefox 63 UA
         }
 
@@ -170,7 +171,6 @@ class KanikumoCrawler():
         Returns:
             self
         """
-        self.set_default_lua_source_settings()
         self.lua_source_settings = {**self.lua_source_settings, **settings} if not replace else settings
         return self
 
@@ -184,6 +184,8 @@ class KanikumoCrawler():
         Returns:
             str
         """
+        logging.error('%s' % json.dumps(self.get_lua_source_settings()))
+        logging.error(self.lua_source % self.get_lua_source_settings())
         return self.lua_source % self.get_lua_source_settings()
 
 
@@ -197,7 +199,7 @@ class KanikumoCrawler():
         Returns:
             self
         """
-        self.set_default_lua_source_settings()
+        self.set_lua_source_settings()
 
         if len(lua_script) > 0:
             self.lua_source = lua_script
