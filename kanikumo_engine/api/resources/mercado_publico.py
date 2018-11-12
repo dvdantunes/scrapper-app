@@ -10,7 +10,7 @@ from kanikumo_engine.libs.scraper.scraper.spiders.mercadopublicocl_alt import Me
 class BigPurchasesList(Resource):
     """mercadopublico.cl big purchases api resource
 
-    Get 20 more recent big purchases data for the last 60 days, from mercadopublico.cl website
+    Get the 20 more recent big purchases data over the last 60 days, from mercadopublico.cl website
 
     Extends:
         Resource
@@ -25,12 +25,15 @@ class BigPurchasesList(Resource):
 
         try:
             crawler_response = scraper_crawl_job(MercadoPublicoClBigPurchasesSpiderAlt)
-            result = 'success'
+            status = 'success'
+            message = crawler_response['message']
+            data = crawler_response['data']
 
         except Exception as e:
-            logging.exception('Error while getting data on "%s" endpoint' % self.__class__.__name__)
-            crawler_response = {}
-            result = 'error'
+            status = 'error'
+            data = {}
+            message = 'Error while getting data on \'%s\' endpoint' % self.__class__.__name__
+            logging.exception(message)
 
 
-        return api_response(crawler_response, result)
+        return api_response(data, status, message)
