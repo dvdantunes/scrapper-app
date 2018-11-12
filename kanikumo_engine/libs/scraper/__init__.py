@@ -4,11 +4,11 @@ import os, logging, json
 def scraper_crawl_job(spider_class):
     """Executes the specified spider and returns its crawled results
 
-    NOTE: Due to a bug on scrapy-splash on lua scripts execution endpoint, it can't be
+    NOTE: Due to a bug on scrapy-splash on lua scripts execution endpoint, it cannot be
     possible to use the standard scrapy-splash approach. Instead, it is used a simple
     http request approach with another Heroku app that deploys the scrapy-splash instance
 
-    NOTE 2: For reference purposes, there is still a copy of the standar scrapy-splash approach
+    NOTE 2: For reference purposes, there is still a copy of the standard scrapy-splash approach
     on paths:
         kanikumo_engine/libs/scraper/__init__.py
 
@@ -24,9 +24,8 @@ def scraper_crawl_job(spider_class):
     """
 
 
-    # Configure a crawler process for the spider and runs it
+    # Configure the spider and runs it
     try:
-
         spider = spider_class()
         crawler_response = spider.crawl()
 
