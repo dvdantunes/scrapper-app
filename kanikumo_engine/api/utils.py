@@ -23,7 +23,7 @@ def output_plaintext(data, code=200, headers=None):
 
 
 
-def api_response(data, result='', headers=None):
+def api_response(data, status='', message='', headers=None):
     """Handler to output default api responses
 
 
@@ -31,7 +31,8 @@ def api_response(data, result='', headers=None):
         data {json} -- Data to output
 
     Keyword Arguments:
-        result {string} -- Request result
+        status {string} -- Request code status
+        message {string} -- Request message
         headers {list} -- Response headers (default: {None})
 
     Returns:
@@ -39,8 +40,9 @@ def api_response(data, result='', headers=None):
     """
 
     data_response = {
-            'code' : 200 if result == 'success' else 500,
-            'message' : 'success' if result == 'success' else 'error',
+            'code' : 200 if status == 'success' else 500,
+            'status' : 'success' if status == 'success' else 'error',
+            'message' : message,
             'data' : data
         }
 
