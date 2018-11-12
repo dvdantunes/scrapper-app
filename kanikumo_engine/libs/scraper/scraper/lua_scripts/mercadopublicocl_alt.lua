@@ -8,8 +8,8 @@ function wait_for_element(splash, css, maxwait)
 
   return splash:wait_for_resume(string.format([[
     function main(splash) {
-      var selector = '%s';
-      var maxwait = %s;
+      var selector = '%%s';
+      var maxwait = %%s;
       var end = Date.now() + maxwait*1000;
 
       function check() {
@@ -34,8 +34,8 @@ function no_items(splash, error_msg)
   return {
     error = 0,
     error_msg = error_msg,
-    page1 = {hmtl = ''},
-    page2 = {hmtl = ''},
+    page1 = {html = ''},
+    page2 = {html = ''},
     performance = splash:get_perf_stats()
   }
 end
@@ -59,9 +59,7 @@ function main(splash)
   -- Initial config
   splash.js_enabled = %(js_enabled)s
   splash.images_enabled = %(images_enabled)s
-  splash.webgl_enabled = %(webgl_enabled)s
-  splash.media_source_enabled = %(media_source_enabled)s
-  splash.set_user_agent('%(user_agent)s')
+  splash:set_user_agent('%(user_agent)s')
 
 
   -- First request

@@ -11,7 +11,8 @@ class MercadoPublicoClBigPurchasesSpiderAlt(KanikumoCrawler):
 
     Get (if exists) the 20 more recent big purchases data over the last 60 days, from mercadopublico.cl website
 
-    NOTE: Each page of the results page contains 10 big purchases
+    NOTE: Each page of the results page site contains 10 big purchases
+
 
     Extends:
         KanikumoCrawler
@@ -23,7 +24,7 @@ class MercadoPublicoClBigPurchasesSpiderAlt(KanikumoCrawler):
 
 
 
-    def set_lua_source_settings(self):
+    def set_lua_source_settings(self, settings={}, replace=False):
         """Set lua source settings
 
         Returns:
@@ -33,11 +34,12 @@ class MercadoPublicoClBigPurchasesSpiderAlt(KanikumoCrawler):
         # Sets date range to search
         now = datetime.now()
         lua_source_settings = {
-            'today' : now.strftime("%d-%m-%Y"),
-            'last_60_days' : (now - timedelta(days=60)).strftime("%d-%m-%Y")
+            'today' : now.strftime("%d-%m-%Y") if 'today' not in settings else settings['today'],
+            'last_60_days' : (now - timedelta(days=60)).strftime("%d-%m-%Y") if 'last_60_days' not in settings \
+                                else settings['last_60_days'],
         }
 
-        return super().set_lua_source(lua_source_settings)
+        return super().set_lua_source_settings(lua_source_settings)
 
 
 
@@ -47,15 +49,11 @@ class MercadoPublicoClBigPurchasesSpiderAlt(KanikumoCrawler):
         Returns:
             self
         """
-
         lua_source = ''
 
         lua_scripts_path = "%s/lua_scripts/" % os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
-        current_file_no_extension = '.'.join(__file__.split('.')[:-1])
-
-        lua_script_file = os.path.join(lua_scripts_path, '%s.lua' % current_file_no_extension)
-
-        logging.error('lua_scripts_path: %s, current_file_no_extension: %s, lua_script_file: %s' % (lua_scripts_path, current_file_no_extension, lua_script_file))
+        filename, file_extension = os.path.splitext(os.path.basename(__file__))
+        lua_script_file = os.path.join(lua_scripts_path, '%s.lua' % filename)
 
         with open(lua_script_file, 'r') as f:
             lua_source = f.read()
@@ -108,15 +106,13 @@ class MercadoPublicoClBigPurchasesSpiderAlt(KanikumoCrawler):
 
 
     def page_parse(self, response):
-        """[summary]
-
-        [description]
+        """Get desired data from page html response
 
         Arguments:
-            response {[type]} -- [description]
+            response {HtmlResponse} -- HtmlResponse object that contains the html response
 
         Returns:
-            [type] -- [description]
+            list    Returns the data on a list of dicts, each dict with a particular big purchase data
         """
 
         def isset(data_list, index):
