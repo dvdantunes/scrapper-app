@@ -6,7 +6,7 @@ CURRENT_PATH = os.path.abspath(os.path.dirname(__file__))
 
 
 
-description = 'A simple web scrapper'
+description = 'A simple web scraper to parse the web'
 
 long_description = ''
 with open(os.path.join(CURRENT_PATH, 'README.md'), 'r') as f:
@@ -16,14 +16,9 @@ with open(os.path.join(CURRENT_PATH, 'README.md'), 'r') as f:
 requirements = [
         'Flask==1.0.2',
         'Flask-RESTful==0.3.6',
-        'Flask-SQLAlchemy==2.3.1',
-        'Flask-Migrate==2.3.0',
-        'psycopg2==2.7.5',
         'service_identity==17.0.0',
         'pyasn1==0.4.4',
         'scrapy==1.5',
-        'scrapyd==1.2.0',
-        'scrapyd-heroku==0.2.0',
         'scrapy-splash==0.7.2',
         'gunicorn==19.9.0',
         'sentry-sdk[flask]==0.5.3',
