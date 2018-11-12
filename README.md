@@ -1,6 +1,6 @@
 # Kanikumo engine
 
-[![Build Status](https://travis-ci.com/dvdantunes/scrapper-app.svg?token=oXc14pfxPystduN1ouCp&branch=master)](https://travis-ci.com/dvdantunes/scrapper-app)
+[![Build Status](https://travis-ci.org/dvdantunes/scrapper-app.svg?branch=master)](https://travis-ci.org/dvdantunes/scrapper-app)
 
 
 ## Overview
