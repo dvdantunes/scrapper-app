@@ -8,6 +8,15 @@
 A simple web scraper to parse the web
 
 
+## Demo
+
+You can see this engine in action through your browser on its [official endpoint](https://kanikumo-engine.herokuapp.com/)
+
+Alternatively, you can request it through `curl`. For example:
+
+    curl -s https://kanikumo-engine.herokuapp.com/ -v
+
+
 ## Quick Start
 
 
