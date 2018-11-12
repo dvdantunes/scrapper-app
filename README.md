@@ -39,7 +39,7 @@ For example, on Ubuntu:
 
         $ apt install build-essential python3-dev
 
-- Additionally, you will need a `splash` docker container to use its render engine. Please follow the [instructions](https://splash.readthedocs.io/en/stable/install.html) on its official site.
+- Additionally, you will need to install a `splash` docker container to use its render engine. Please follow the [instructions](https://splash.readthedocs.io/en/stable/install.html) on its official site.
 
     - After install docker you can pull it from `docker hub`:
         ```$ sudo docker pull scrapinghub/splash```
