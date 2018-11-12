@@ -1,3 +1,5 @@
+import os, logging
+from datetime import datetime, timedelta
 from scrapy.http import Response, HtmlResponse
 
 from kanikumo_engine.libs.scraper.scraper.spiders.kanikumo_crawler import KanikumoCrawler
@@ -7,11 +9,9 @@ from kanikumo_engine.libs.scraper.scraper.spiders.kanikumo_crawler import Kaniku
 class MercadoPublicoClBigPurchasesSpiderAlt(KanikumoCrawler):
     """Spider that gets mercadopublico.cl big purchases
 
-    Get 20 more recent big purchases data for the last 60 days, from mercadopublico.cl website
+    Get (if exists) the 20 more recent big purchases data over the last 60 days, from mercadopublico.cl website
 
-    To know more about the selected request approach, please review the docs of the following files:
-        @see kanikumo_engine/libs/scraper/scraper/spiders/kanikumo_crawler.py
-        @see kanikumo_engine/libs/scraper/scraper/spiders/mercadopublicocl.py
+    NOTE: Each page of the results page contains 10 big purchases
 
     Extends:
         KanikumoCrawler
@@ -19,66 +19,65 @@ class MercadoPublicoClBigPurchasesSpiderAlt(KanikumoCrawler):
     Variables:
         start_url {str} -- Url where the crawling begins
     """
-
     start_url = "http://www.mercadopublico.cl/Portal/Modules/Site/Busquedas/BuscadorAvanzado.aspx?qs=9"
 
 
 
-    def get_lua_source(self):
+    def set_lua_source_settings(self):
+        """Set lua source settings
 
-        # Get date range to search
-        today = '10-11-2018'
-        last_60_days = '10-10-2018'
+        Returns:
+            self
+        """
+
+        # Sets date range to search
+        now = datetime.now()
+        lua_source_settings = {
+            'today' : now.strftime("%d-%m-%Y"),
+            'last_60_days' : (now - timedelta(days=60)).strftime("%d-%m-%Y")
+        }
+
+        return super().set_lua_source(lua_source_settings)
 
 
-        self.lua_source = """
-        function main(splash)
-          local url = splash.args.url
-          assert(splash:go(url))
-          assert(splash:wait(1))
 
-          -- set dates and submit form
-          assert(splash:runjs("document.querySelector('#heaFecha label[for=chkFecha]').click();"))
-          assert(splash:wait(0.2))
+    def set_lua_source(self):
+        """Sets lua source script
 
-          assert(splash:runjs("document.querySelector('#txtFecha1').value = '%s';"))
-          assert(splash:runjs("document.querySelector('#txtFecha2').value = '%s';"))
-          assert(splash:runjs("document.querySelector('#btnBusqueda').click();"))
-          assert(splash:wait(3))
+        Returns:
+            self
+        """
 
-          -- get pages content
-          local pages = {}
-          pages['page1'] = {html = splash:html()}
+        lua_source = ''
 
-          -- check paginator #2 and get page 2
-          assert(splash:runjs("document.querySelector('#PaginadorBusqueda__TblPages td:nth-child(3) div').click();"))
-          assert(splash:wait(3))
-          pages['page2'] = {html = splash:html()}
+        lua_scripts_path = "%s/lua_scripts/" % os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+        current_file_no_extension = '.'.join(__file__.split('.')[:-1])
 
-          --return {title = splash:evaljs("document.title")}
-          return pages
-        end
-        """ % (last_60_days, today)
+        lua_script_file = os.path.join(lua_scripts_path, '%s.lua' % current_file_no_extension)
 
-        return self.lua_source
+        logging.error('lua_scripts_path: %s, current_file_no_extension: %s, lua_script_file: %s' % (lua_scripts_path, current_file_no_extension, lua_script_file))
+
+        with open(lua_script_file, 'r') as f:
+            lua_source = f.read()
+
+        return super().set_lua_source(lua_source)
 
 
 
 
     def parse(self, response):
-        """[summary]
-
-        [description]
+        """Parses the crawler response and returns the found data results
 
         Arguments:
-            response {[type]} -- [description]
+            response {Response} -- Crawler response
 
         Returns:
-            {str} -- application/json crawler response
+            str -- Crawler data results
         """
-
         response = response.json()
 
+
+        # Gets data from page 1 (each page has 10 results)
         responsePage1 = HtmlResponse(
                             self.start_url,
                             status=200,
@@ -87,6 +86,7 @@ class MercadoPublicoClBigPurchasesSpiderAlt(KanikumoCrawler):
         resultsPage1 = self.page_parse(responsePage1)
 
 
+        # Gets data from page 2
         responsePage2 = HtmlResponse(
                             self.start_url,
                             status=200,
@@ -95,25 +95,49 @@ class MercadoPublicoClBigPurchasesSpiderAlt(KanikumoCrawler):
         resultsPage2 = self.page_parse(responsePage2)
 
 
-        return resultsPage1 + resultsPage2
+        # Merge both pages data
+        results = resultsPage1 + resultsPage2
+
+
+        return {
+            'message' : 'There were found %d results' % len(results),
+            'data' : results
+        }
+
+
 
 
     def page_parse(self, response):
+        """[summary]
+
+        [description]
+
+        Arguments:
+            response {[type]} -- [description]
+
+        Returns:
+            [type] -- [description]
+        """
+
+        def isset(data_list, index):
+            return True if len(data_list) > index else False
+
 
         results = []
         keys = ['id', 'name', 'buyer', 'supplier', 'invitation_ini_date', 'invitation_end_date', 'status']
         for tableResults in response.css('div#pnlSearch1 table:nth-child(1) tr:not(.cssGridAdvancedResult)'):
 
+
             row_data1 = tableResults.css('td a').re(r'.*>(.*)</a>')
             row_data2 = tableResults.css('td span::text').extract()
             row_data = [
-                    row_data1[0],
-                    row_data2[0],
-                    row_data1[1],
-                    row_data1[2],
-                    row_data2[1],
-                    row_data2[2],
-                    row_data2[3],
+                    '' if not isset(row_data1, 0) else row_data1[0],
+                    '' if not isset(row_data2, 0) else row_data2[0],
+                    '' if not isset(row_data1, 1) else row_data1[1],
+                    '' if not isset(row_data1, 2) else row_data1[2],
+                    '' if not isset(row_data2, 1) else row_data2[1],
+                    '' if not isset(row_data2, 2) else row_data2[2],
+                    '' if not isset(row_data2, 3) else row_data2[3],
                 ]
             # row_data = row_data1 + row_data2
 
