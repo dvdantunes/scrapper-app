@@ -1,4 +1,4 @@
-import os, logging
+import os
 from datetime import datetime, timedelta
 from scrapy.http import Response, HtmlResponse
 

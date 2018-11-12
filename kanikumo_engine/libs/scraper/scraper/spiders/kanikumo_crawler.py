@@ -1,4 +1,4 @@
-import os, scrapy, requests, json, logging
+import os, scrapy, requests, json
 from scrapy.settings import Settings
 
 
@@ -184,8 +184,6 @@ class KanikumoCrawler():
         Returns:
             str
         """
-        logging.error('%s' % json.dumps(self.get_lua_source_settings()))
-        logging.error(self.lua_source % self.get_lua_source_settings())
         return self.lua_source % self.get_lua_source_settings()
 
 
